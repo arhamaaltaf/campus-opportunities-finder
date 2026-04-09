@@ -5,13 +5,7 @@ import { Input } from "@/components/ui/input";
 import { OpportunityCard } from "@/components/OpportunityCard";
 import { fetchCompanies, fetchOpportunities, enrichOpportunities } from "@/lib/google-sheets";
 import { Company, Opportunity } from "@/lib/types";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { FilterCombobox } from "@/components/FilterCombobox";
 
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQPEApRSBsR_vdiHgD5R2FeZiTvfqYhN-ps2WBYlMEBC9ggv39x0CXH60R60jieFDs34afZbdpO55Ph/pub?gid=1876046638&single=true&output=csv";
 const OPPORTUNITIES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQPEApRSBsR_vdiHgD5R2FeZiTvfqYhN-ps2WBYlMEBC9ggv39x0CXH60R60jieFDs34afZbdpO55Ph/pub?gid=1819372727&single=true&output=csv";
@@ -155,53 +149,41 @@ export default function Opportunities() {
               Filters
             </div>
 
-            <Select value={roleFilter} onValueChange={setRoleFilter}>
-              <SelectTrigger className="w-[160px] h-9 text-sm bg-card">
-                <SelectValue placeholder="Role Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Role Types</SelectItem>
-                {filterOptions.roleTypes.map((r) => (
-                  <SelectItem key={r} value={r}>{r}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <FilterCombobox
+              value={roleFilter}
+              onChange={setRoleFilter}
+              options={filterOptions.roleTypes}
+              allLabel="All Role Types"
+              placeholder="Role Type"
+              width="w-[160px]"
+            />
 
-            <Select value={industryFilter} onValueChange={setIndustryFilter}>
-              <SelectTrigger className="w-[160px] h-9 text-sm bg-card">
-                <SelectValue placeholder="Industry" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Industries</SelectItem>
-                {filterOptions.industries.map((i) => (
-                  <SelectItem key={i} value={i}>{i}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <FilterCombobox
+              value={industryFilter}
+              onChange={setIndustryFilter}
+              options={filterOptions.industries}
+              allLabel="All Industries"
+              placeholder="Industry"
+              width="w-[160px]"
+            />
 
-            <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
-              <SelectTrigger className="w-[160px] h-9 text-sm bg-card">
-                <SelectValue placeholder="Department" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Departments</SelectItem>
-                {filterOptions.departments.map((d) => (
-                  <SelectItem key={d} value={d}>{d}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <FilterCombobox
+              value={departmentFilter}
+              onChange={setDepartmentFilter}
+              options={filterOptions.departments}
+              allLabel="All Departments"
+              placeholder="Department"
+              width="w-[170px]"
+            />
 
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[140px] h-9 text-sm bg-card">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                {filterOptions.statuses.map((s) => (
-                  <SelectItem key={s} value={s}>{s}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <FilterCombobox
+              value={statusFilter}
+              onChange={setStatusFilter}
+              options={filterOptions.statuses}
+              allLabel="All Statuses"
+              placeholder="Status"
+              width="w-[150px]"
+            />
 
             {activeFilterCount > 0 && (
               <button
