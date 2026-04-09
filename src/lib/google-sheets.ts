@@ -1,4 +1,4 @@
-import { Company, Opportunity, OpportunityCategory } from "./types";
+import { Company, Opportunity } from "./types";
 
 function parseCSV(text: string): string[][] {
   const lines: string[][] = [];
