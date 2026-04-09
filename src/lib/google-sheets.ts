@@ -61,17 +61,19 @@ export async function fetchOpportunities(csvUrl: string): Promise<Opportunity[]>
 
   return rows.slice(1).filter(r => r.some(c => c.trim())).map((row, i) => {
     const get = (name: string) => row[col(name)]?.trim() ?? "";
-    const status = get("status").toLowerCase().includes("open") && !get("status").toLowerCase().includes("not")
+    const rawStatus = get("status").toLowerCase();
+    const status = rawStatus.includes("open") && !rawStatus.includes("not")
       ? "Open" as const : "Not Yet Open" as const;
     return {
-      id: String(i),
-      company: get("company"),
-      role: get("role") || get("position") || "—",
-      category: (get("category") || get("type") || "Internship") as OpportunityCategory,
+      id: get("opportunity id") || String(i),
+      company: get("company id"),
+      role: get("title (program name)") || get("title") || get("role") || "—",
+      category: (get("role type") || get("category") || "Internship") as OpportunityCategory,
       status,
-      deadline: status === "Open" ? (get("deadline") || null) : null,
-      link: status === "Open" ? (get("link") || get("url") || null) : null,
+      deadline: get("deadline") || null,
+      link: get("link to apply") || get("application link") || get("link") || null,
       location: get("location") || undefined,
+      description: get("description") || undefined,
     };
   });
 }

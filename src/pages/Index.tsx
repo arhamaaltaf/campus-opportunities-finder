@@ -1,21 +1,26 @@
 import { useState, useEffect } from "react";
 import { HeroSection } from "@/components/HeroSection";
 import { CompanyList } from "@/components/CompanyList";
-import { fetchCompanies } from "@/lib/google-sheets";
-import { Company } from "@/lib/types";
+import { fetchCompanies, fetchOpportunities } from "@/lib/google-sheets";
+import { Company, Opportunity } from "@/lib/types";
 
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMMGWLN6AE5kcEXJxTQ0ybibnMkCWFGSdmZD53bTvVGsVQDpiBNMUKwgy2wSgjAJwnTxq2fxBIO5tS/pub?output=csv";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQPEApRSBsR_vdiHgD5R2FeZiTvfqYhN-ps2WBYlMEBC9ggv39x0CXH60R60jieFDs34afZbdpO55Ph/pub?gid=1876046638&single=true&output=csv";
+const OPPORTUNITIES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQPEApRSBsR_vdiHgD5R2FeZiTvfqYhN-ps2WBYlMEBC9ggv39x0CXH60R60jieFDs34afZbdpO55Ph/pub?gid=1819372727&single=true&output=csv";
 
 export default function Index() {
   const [searchQuery, setSearchQuery] = useState("");
   const [companies, setCompanies] = useState<Company[]>([]);
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchCompanies(SHEET_CSV_URL)
-      .then(setCompanies)
-      .catch(() => setCompanies([]))
-      .finally(() => setLoading(false));
+    Promise.all([
+      fetchCompanies(SHEET_CSV_URL).catch(() => [] as Company[]),
+      fetchOpportunities(OPPORTUNITIES_CSV_URL).catch(() => [] as Opportunity[]),
+    ]).then(([cos, opps]) => {
+      setCompanies(cos);
+      setOpportunities(opps);
+    }).finally(() => setLoading(false));
   }, []);
 
   return (

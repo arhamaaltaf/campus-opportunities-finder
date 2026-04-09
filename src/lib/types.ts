@@ -1,4 +1,4 @@
-export type OpportunityCategory = "Internship" | "Brand Ambassador" | "MT";
+export type OpportunityCategory = "Internship" | "Brand Ambassador" | "MT" | "Management Trainee";
 
 export interface Company {
   id: string;
@@ -18,4 +18,5 @@ export interface Opportunity {
   deadline: string | null;
   link: string | null;
   location?: string;
+  description?: string;
 }
