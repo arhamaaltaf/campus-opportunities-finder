@@ -11,12 +11,15 @@ export interface Company {
 
 export interface Opportunity {
   id: string;
-  company: string;
+  companyId: string;
+  companyName: string;
   role: string;
-  category: OpportunityCategory;
-  status: "Open" | "Not Yet Open";
+  category: string;
+  status: string;
   deadline: string | null;
   link: string | null;
   location?: string;
   description?: string;
+  industry?: string;
+  departments?: string[];
 }
