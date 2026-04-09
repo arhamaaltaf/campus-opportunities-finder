@@ -50,7 +50,7 @@ export function OpportunitiesList({ opportunities, searchQuery }: OpportunitiesL
 
   const counts = useMemo(() => {
     const base = searchQuery
-      ? opportunities.filter(o => o.company.toLowerCase().includes(searchQuery.toLowerCase()) || o.role.toLowerCase().includes(searchQuery.toLowerCase()))
+      ? opportunities.filter(o => o.companyName.toLowerCase().includes(searchQuery.toLowerCase()) || o.role.toLowerCase().includes(searchQuery.toLowerCase()))
       : opportunities;
     return {
       all: base.length,
