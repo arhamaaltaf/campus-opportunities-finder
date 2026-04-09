@@ -61,19 +61,30 @@ export async function fetchOpportunities(csvUrl: string): Promise<Opportunity[]>
 
   return rows.slice(1).filter(r => r.some(c => c.trim())).map((row, i) => {
     const get = (name: string) => row[col(name)]?.trim() ?? "";
-    const rawStatus = get("status").toLowerCase();
-    const status = rawStatus.includes("open") && !rawStatus.includes("not")
-      ? "Open" as const : "Not Yet Open" as const;
     return {
       id: get("opportunity id") || String(i),
-      company: get("company id"),
+      companyId: get("company id"),
+      companyName: "",
       role: get("title (program name)") || get("title") || get("role") || "—",
-      category: (get("role type") || get("category") || "Internship") as OpportunityCategory,
-      status,
+      category: get("role type") || get("category") || "Internship",
+      status: get("status") || "Open",
       deadline: get("deadline") || null,
       link: get("link to apply") || get("application link") || get("link") || null,
       location: get("location") || undefined,
       description: get("description") || undefined,
+    };
+  });
+}
+
+export function enrichOpportunities(opps: Opportunity[], companies: Company[]): Opportunity[] {
+  const companyMap = new Map(companies.map(c => [c.id, c]));
+  return opps.map(o => {
+    const company = companyMap.get(o.companyId);
+    return {
+      ...o,
+      companyName: company?.name || o.companyId,
+      industry: company?.industry,
+      departments: company?.departments,
     };
   });
 }
