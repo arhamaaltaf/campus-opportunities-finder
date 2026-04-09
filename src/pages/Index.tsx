@@ -45,8 +45,6 @@ export default function Index() {
       </header>
 
       <HeroSection
-        searchQuery=""
-        onSearchChange={() => {}}
         totalCount={opportunities.length}
         openCount={openCount}
       />
