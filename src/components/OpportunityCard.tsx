@@ -9,7 +9,7 @@ interface OpportunityCardProps {
 }
 
 export function OpportunityCard({ opportunity, isBookmarked, onToggleBookmark }: OpportunityCardProps) {
-  const { company, role, category, status, deadline, link, location } = opportunity;
+  const { companyName, role, category, status, deadline, link, location } = opportunity;
   const isOpen = status === "Open";
 
   return (
