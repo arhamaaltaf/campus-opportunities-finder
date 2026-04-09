@@ -1,35 +1,22 @@
 import { useState, useEffect } from "react";
 import { HeroSection } from "@/components/HeroSection";
-import { OpportunitiesList } from "@/components/OpportunitiesList";
-import { fetchOpportunities, getMockOpportunities } from "@/lib/google-sheets";
-import { Opportunity } from "@/lib/types";
+import { CompanyList } from "@/components/CompanyList";
+import { fetchCompanies } from "@/lib/google-sheets";
+import { Company } from "@/lib/types";
 
-const SHEET_CSV_URL = import.meta.env.VITE_GOOGLE_SHEET_CSV_URL as string | undefined;
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMMGWLN6AE5kcEXJxTQ0ybibnMkCWFGSdmZD53bTvVGsVQDpiBNMUKwgy2wSgjAJwnTxq2fxBIO5tS/pub?output=csv";
 
 export default function Index() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function load() {
-      try {
-        if (SHEET_CSV_URL) {
-          const data = await fetchOpportunities(SHEET_CSV_URL);
-          setOpportunities(data);
-        } else {
-          setOpportunities(getMockOpportunities());
-        }
-      } catch {
-        setOpportunities(getMockOpportunities());
-      } finally {
-        setLoading(false);
-      }
-    }
-    load();
+    fetchCompanies(SHEET_CSV_URL)
+      .then(setCompanies)
+      .catch(() => setCompanies([]))
+      .finally(() => setLoading(false));
   }, []);
-
-  const openCount = opportunities.filter((o) => o.status === "Open").length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -43,8 +30,8 @@ export default function Index() {
       <HeroSection
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        totalCount={opportunities.length}
-        openCount={openCount}
+        totalCount={companies.length}
+        openCount={companies.length}
       />
 
       {loading ? (
@@ -52,7 +39,7 @@ export default function Index() {
           <div className="h-8 w-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
         </div>
       ) : (
-        <OpportunitiesList opportunities={opportunities} searchQuery={searchQuery} />
+        <CompanyList companies={companies} searchQuery={searchQuery} />
       )}
     </div>
   );
