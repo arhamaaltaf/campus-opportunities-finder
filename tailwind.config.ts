@@ -13,7 +13,14 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+      },
       colors: {
+        "status-open": "hsl(var(--status-open))",
+        "status-open-bg": "hsl(var(--status-open-bg))",
+        "status-closed": "hsl(var(--status-closed))",
+        "status-closed-bg": "hsl(var(--status-closed-bg))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
