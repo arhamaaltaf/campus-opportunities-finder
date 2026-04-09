@@ -7,16 +7,20 @@ export interface Company {
   industry: string;
   location: string;
   notes: string;
+  departments?: string[];
 }
 
 export interface Opportunity {
   id: string;
-  company: string;
+  companyId: string;
+  companyName: string;
   role: string;
-  category: OpportunityCategory;
-  status: "Open" | "Not Yet Open";
+  category: string;
+  status: string;
   deadline: string | null;
   link: string | null;
   location?: string;
   description?: string;
+  industry?: string;
+  departments?: string[];
 }
