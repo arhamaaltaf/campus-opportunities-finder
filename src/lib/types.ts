@@ -1,5 +1,14 @@
 export type OpportunityCategory = "Internship" | "Brand Ambassador" | "MT";
 
+export interface Company {
+  id: string;
+  name: string;
+  website: string;
+  industry: string;
+  location: string;
+  notes: string;
+}
+
 export interface Opportunity {
   id: string;
   company: string;
