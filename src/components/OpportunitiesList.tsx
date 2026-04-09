@@ -32,7 +32,7 @@ export function OpportunitiesList({ opportunities, searchQuery }: OpportunitiesL
       const q = searchQuery.toLowerCase();
       items = items.filter(
         (o) =>
-          o.company.toLowerCase().includes(q) ||
+          o.companyName.toLowerCase().includes(q) ||
           o.role.toLowerCase().includes(q)
       );
     }
