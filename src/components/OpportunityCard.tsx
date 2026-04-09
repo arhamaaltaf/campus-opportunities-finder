@@ -32,7 +32,7 @@ export function OpportunityCard({ opportunity, isBookmarked, onToggleBookmark }:
           </div>
 
           <div>
-            <h3 className="font-bold text-foreground text-lg leading-tight">{company}</h3>
+            <h3 className="font-bold text-foreground text-lg leading-tight">{companyName}</h3>
             <p className="text-muted-foreground text-sm mt-0.5">{role}</p>
           </div>
 

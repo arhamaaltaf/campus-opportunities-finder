@@ -37,6 +37,7 @@ export async function fetchCompanies(csvUrl: string): Promise<Company[]> {
 
   return rows.slice(1).filter(r => r.some(c => c.trim())).map(row => {
     const get = (name: string) => row[col(name)]?.trim() ?? "";
+    const deptStr = get("department");
     return {
       id: get("company id") || get("id") || get("company name"),
       name: get("company name") || get("name") || "Unknown",
@@ -44,6 +45,7 @@ export async function fetchCompanies(csvUrl: string): Promise<Company[]> {
       industry: get("industry"),
       location: get("location"),
       notes: get("notes"),
+      departments: deptStr ? deptStr.split(";").map(d => d.trim()).filter(Boolean) : undefined,
     } as Company;
   });
 }

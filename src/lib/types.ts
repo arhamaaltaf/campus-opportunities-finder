@@ -7,6 +7,7 @@ export interface Company {
   industry: string;
   location: string;
   notes: string;
+  departments?: string[];
 }
 
 export interface Opportunity {
